@@ -1,34 +1,44 @@
-/**
- *
- * LoginForm
- *
- */
-
-import { Form, Icon, Input, Button, Checkbox } from "antd";
-
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import { createStructuredSelector } from "reselect";
-import { compose } from "redux";
-
-import injectSaga from "utils/injectSaga";
-import injectReducer from "utils/injectReducer";
-import makeSelectLoginForm from "./selectors";
-import reducer from "./reducer";
-import saga from "./saga";
-import messages from "./messages";
+import React from 'react';
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { fetchData, receiveData } from './actions.js';
+import './index.css';
 
 const FormItem = Form.Item;
 
-/* eslint-disable react/prefer-stateless-function */
-class LoginForm extends React.Component {
+class Login extends React.Component {
+  componentWillMount() {
+    // const { receiveData } = this.props;
+    // receiveData(null, 'auth');
+  }
+  componentWillReceiveProps(nextProps) {
+    const { auth: nextAuth = {} } = nextProps;
+    const { history } = this.props;
+    if (nextAuth.data && nextAuth.data.uid) {
+      localStorage.setItem('user', JSON.stringify(nextAuth.data));
+      history.push('/');
+    }
+  }
+  componentDidUpdate(prevProps) {
+    const { auth: nextAuth = {}, history } = this.props;
+    // const { history } = this.props;
+    if (nextAuth.data && nextAuth.data.uid) {
+      localStorage.setItem('user', JSON.stringify(nextAuth.data));
+      history.push('/');
+    }
+  }
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        console.log('Received values of form: ', values);
+        const { fetchData } = this.props;
+        console.log(this.props);
+        if (values.userName === 'admin' && values.password === 'admin')
+          fetchData({ funcName: 'admin', stateName: 'auth' });
+        if (values.userName === 'guest' && values.password === 'guest')
+          fetchData({ funcName: 'guest', stateName: 'auth' });
       }
     });
   };
@@ -36,82 +46,67 @@ class LoginForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
-        <FormItem>
-          {getFieldDecorator("userName", {
-            rules: [{ required: true, message: "Please input your username!" }]
-          })(
-            <Input
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="Username"
-            />
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator("password", {
-            rules: [{ required: true, message: "Please input your Password!" }]
-          })(
-            <Input
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              type="password"
-              placeholder="Password"
-            />
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator("remember", {
-            valuePropName: "checked",
-            initialValue: true
-          })(<Checkbox>Remember me</Checkbox>)}
-          <a className="login-form-forgot" href="">
-            Forgot password
-          </a>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            Log in
-          </Button>
-          Or <a href="">register now!</a>
-        </FormItem>
-      </Form>
+      <div className="login">
+        <div className="login-form">
+          <div className="login-logo">
+            <span>OwnCRM</span>
+          </div>
+          <Form onSubmit={this.handleSubmit} style={{ maxWidth: '300px' }}>
+            <FormItem>
+              {getFieldDecorator('userName', {
+                rules: [{ required: true, message: 'username!' }],
+              })(
+                <Input
+                  prefix={<Icon type="user" style={{ fontSize: 13 }} />}
+                  placeholder="admin: admin"
+                />,
+              )}
+            </FormItem>
+            <FormItem>
+              {getFieldDecorator('password', {
+                rules: [{ required: true, message: 'password!' }],
+              })(
+                <Input
+                  prefix={<Icon type="lock" style={{ fontSize: 13 }} />}
+                  type="password"
+                  placeholder="admin: admin"
+                />,
+              )}
+            </FormItem>
+            <FormItem>
+              {getFieldDecorator('remember', {
+                valuePropName: 'checked',
+                initialValue: true,
+              })(<Checkbox>Remember</Checkbox>)}
+              <a className="login-form-forgot" style={{ float: 'right' }}>
+                Forgot password
+              </a>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+                style={{ width: '100%' }}
+              >
+                Log in
+              </Button>
+            </FormItem>
+          </Form>
+        </div>
+      </div>
     );
   }
 }
 
-LoginForm.propTypes = {
-  dispatch: PropTypes.func.isRequired
+const mapStateToPorps = state => {
+  // const { auth } = state.httpData;
+  // return { auth };
 };
-
-const mapStateToProps = createStructuredSelector({
-  loginform: makeSelectLoginForm()
+const mapDispatchToProps = dispatch => ({
+  // fetchData: bindActionCreators(fetchData, dispatch),
+  // receiveData: bindActionCreators(receiveData, dispatch),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch
-  };
-}
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
-
-const withReducer = injectReducer({
-  key: "loginForm",
-  reducer
-});
-const withSaga = injectSaga({
-  key: "loginForm",
-  saga
-});
-
-const WrappedLoginForm = Form.create()(LoginForm);
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect
-)(WrappedLoginForm);
+export default connect(
+  mapStateToPorps,
+  mapDispatchToProps,
+)(Form.create()(Login));
