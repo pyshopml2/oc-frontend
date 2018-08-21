@@ -1,11 +1,15 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 // import { fetchData, receiveData } from './actions.js';
 import './index.css';
 
 const FormItem = Form.Item;
+
+const error = () => {
+  message.error('Failed to login');
+};
 
 class Login extends React.Component {
   componentWillMount() {
@@ -39,6 +43,7 @@ class Login extends React.Component {
           fetchData({ funcName: 'admin', stateName: 'auth' });
         if (values.userName === 'guest' && values.password === 'guest')
           fetchData({ funcName: 'guest', stateName: 'auth' });
+        error();
       }
     });
   };
