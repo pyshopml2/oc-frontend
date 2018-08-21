@@ -4,17 +4,18 @@
  *
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Breadcrumb, Layout, Menu, Icon, Avatar, Input } from 'antd';
+import { Badge, Tooltip, Button, Popover, Breadcrumb, Layout, Menu, Icon, Avatar, Input } from 'antd';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectBasicLayout from './selectors';
+import {makeSelectCurrentPathName} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
@@ -25,8 +26,32 @@ import MenuWithRouter from '../../components/MenuWithRouter/Loadable'
 const { Header, Content, Sider, Footer } = Layout;
 const Search = Input.Search;
 
+const fakeNotificationContent = (
+  <div>
+    <p>раз</p>
+    <p>два</p>
+  </div>
+);
+
+const fakeProfileContent = (
+  <div style={{display: 'flex', flexDirection: 'column'}}>
+    <Button style={{margin: '5px'}}>
+      Профиль
+    </Button>
+    <Button style={{margin: '5px'}}>
+      Выход
+    </Button>
+  </div>
+);
+
+const fakeFastTaskAddContent = (
+  <div>
+    <p>раз</p>
+    <p>два</p>
+  </div>
+);
 /* eslint-disable react/prefer-stateless-function */
-export class BasicLayout extends React.Component {
+export class BasicLayout extends Component {
   state = {
     collapsed: false,
   };
@@ -47,32 +72,13 @@ export class BasicLayout extends React.Component {
           collapsed={this.state.collapsed}
           width="210"
         >
-          <div className="logo" style={{ color: '#001529', fontSize:20, textAlign: 'center' }}> OwnCRM </div>
-          <MenuWithRouter>
-
-          </MenuWithRouter>
-          {/* <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
-              <Icon type="table" />
-              <Link to="/catalog">Справочники</Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="home" />
-              <span>Профиль организации</span>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Icon type="setting" />
-              <span>Параметры системы</span>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <Icon type="upload" />
-              <span>Роли и разрешения</span>
-            </Menu.Item>
-            <Menu.Item key="5">
-              <Icon type="team" />
-              <span>Сотрудники</span>
-            </Menu.Item>
-          </Menu> */}
+          { 
+            this.state.collapsed? 
+            <div className="logo" style={{ color: '#001529', fontSize:20, textAlign: 'center' }}> O </div>
+            :
+            <div className="logo" style={{ color: '#001529', fontSize:20, textAlign: 'center' }}> OwnCRM </div>
+          }
+        <MenuWithRouter currentLocation = {this.props.location.location.pathname}/>
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }} className="Header">
@@ -86,14 +92,29 @@ export class BasicLayout extends React.Component {
               <Search
                 placeholder="Поиск"
                 onSearch={value => console.log(value)}
-                style={{ width: 200, margin: '0 10px' }}
+                style={{ width: 200}}
               />
-              <Icon
-                className="Bell"
-                type="bell"
-                style={{ color: '#CCCCCC', fontSize: 28, margin: '0 10px' }}
-              />
-              <Avatar icon="user" style={{ margin: '0 10px' }} />
+              <Tooltip title="Добавить задачу">
+                <Popover content={fakeFastTaskAddContent} title="Добавить задачу" trigger="click">
+                  <Button icon="plus" style={{ margin: '0 20px' }} />
+                </Popover>
+              </Tooltip>
+              <Tooltip title="Уведомления">
+                <Popover content={fakeNotificationContent} title="Уведомления" trigger="click">
+                  <Badge count={2}>
+                    <Button
+                      className="Bell"
+                      icon="bell"
+                      style={{}}
+                    />
+                  </Badge>
+                </Popover>
+              </Tooltip>
+              <Tooltip title="Профиль">
+                <Popover content={fakeProfileContent} title="Профиль" trigger="click">
+                  <Button icon="user" style={{ margin: '0 20px' }} />
+                </Popover>
+              </Tooltip>
             </div>
           </Header>
           <Content
@@ -114,6 +135,7 @@ export class BasicLayout extends React.Component {
               </Breadcrumb.Item>
               <Breadcrumb.Item>Application</Breadcrumb.Item>
             </Breadcrumb>
+            {this.props.children}
           </Content>
           <Footer style={{ textAlign: 'center' }}>OwnCRM, 2018</Footer>
         </Layout>
@@ -128,6 +150,7 @@ BasicLayout.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   basiclayout: makeSelectBasicLayout(),
+  location: makeSelectCurrentPathName(),
 });
 
 function mapDispatchToProps(dispatch) {

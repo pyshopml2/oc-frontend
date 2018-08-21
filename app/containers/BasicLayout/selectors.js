@@ -6,7 +6,7 @@ import { initialState } from './reducer';
  */
 
 const selectBasicLayoutDomain = state => state.get('basicLayout', initialState);
-
+const selectCurrentPathName = state => state.get('route', initialState);
 /**
  * Other specific selectors
  */
@@ -18,5 +18,8 @@ const selectBasicLayoutDomain = state => state.get('basicLayout', initialState);
 const makeSelectBasicLayout = () =>
   createSelector(selectBasicLayoutDomain, substate => substate.toJS());
 
+const makeSelectCurrentPathName = () =>
+  createSelector(selectCurrentPathName, substate => substate.toJS());
+
 export default makeSelectBasicLayout;
-export { selectBasicLayoutDomain };
+export { makeSelectCurrentPathName, selectBasicLayoutDomain };
