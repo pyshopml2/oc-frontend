@@ -1,0 +1,37 @@
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color .3s;
+  flex:1;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.logo {
+  height: 32px;
+  background: rgba(255,255,255,.2);
+  margin: 16px;
+}
+
+.Header {
+  display: flex;
+  align-items: center;
+
+}
+
+.Right {
+  flex:50;
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 24px;
+  flex-basis: content;
+}
+
+.Bell {
+  color: #1890ff;
+}
