@@ -12,11 +12,15 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import Sidebar from '../Sidebar/Loadable';
+import BasicLayout from '../BasicLayout/Loadable';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
+  
   render() {
-    return <Sidebar />;
+    return <BasicLayout>{
+    }
+      <div>Здесь div</div>
+    </BasicLayout>;
   }
 }

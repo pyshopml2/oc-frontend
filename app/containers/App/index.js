@@ -7,19 +7,21 @@
  */
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
 import LoginForm from 'containers/LoginForm/Loadable';
+import HomePage from 'containers/HomePage/Loadable';
+import EmployeesPage from 'containers/EmployeesPage/Loadable';
+import ProfilePage from 'containers/ProfilePage/Loadable';
+import RolesPage from 'containers/RolesPage/Loadable';
+import SettingsPage from 'containers/SettingsPage/Loadable';
+import CatalogPage from 'containers/CatalogPage/Loadable';
+// import BasicLayout from 'containers/BasicLayout/Loadable'
 
 const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
   display: flex;
-  min-height: 100%;
-  padding: 0 16px;
+  min-height: 100vh;
   flex-direction: column;
 `;
 
@@ -27,8 +29,13 @@ export default function App() {
   return (
     <AppWrapper>
       <Switch>
-        <Route exact path="/" component={HomePage} />
         <Route path="/login" component={LoginForm} />
+        <Route path="/" component={HomePage} />
+        <Route path="/catalog" component={CatalogPage} />
+        <Route path="/profile" component={ProfilePage} />
+        <Route path="/settings" component={SettingsPage} />
+        <Route path="/roles" component={RolesPage} />
+        <Route path="/employees" component={EmployeesPage} />
       </Switch>
     </AppWrapper>
   );
