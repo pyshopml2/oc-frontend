@@ -15,7 +15,7 @@ import { Badge, Tooltip, Button, Popover, Breadcrumb, Layout, Menu, Icon, Avatar
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectBasicLayout from './selectors';
-import {makeSelectCurrentPathName} from './selectors';
+import { makeSelectCurrentPathName } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
@@ -34,13 +34,9 @@ const fakeNotificationContent = (
 );
 
 const fakeProfileContent = (
-  <div style={{display: 'flex', flexDirection: 'column'}}>
-    <Button style={{margin: '5px'}}>
-      Профиль
-    </Button>
-    <Button style={{margin: '5px'}}>
-      Выход
-    </Button>
+  <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <Button style={{ margin: '5px' }}> Профиль </Button>
+    <Button style={{ margin: '5px' }}> Выход </Button>
   </div>
 );
 
@@ -72,13 +68,13 @@ export class BasicLayout extends Component {
           collapsed={this.state.collapsed}
           width="210"
         >
-          { 
-            this.state.collapsed? 
-            <div className="logo" style={{ color: '#001529', fontSize:20, textAlign: 'center' }}> O </div>
-            :
-            <div className="logo" style={{ color: '#001529', fontSize:20, textAlign: 'center' }}> OwnCRM </div>
+          {
+            this.state.collapsed ?
+              <div className="logo" style={{ color: '#001529', fontSize: 20, textAlign: 'center' }}> O </div>
+              :
+              <div className="logo" style={{ color: '#001529', fontSize: 20, textAlign: 'center' }}> OwnCRM </div>
           }
-        <MenuWithRouter currentLocation = {this.props.location.location.pathname}/>
+          <MenuWithRouter currentLocation={this.props.location.location.pathname} />
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }} className="Header">
@@ -92,7 +88,7 @@ export class BasicLayout extends Component {
               <Search
                 placeholder="Поиск"
                 onSearch={value => console.log(value)}
-                style={{ width: 200}}
+                style={{ width: 200 }}
               />
               <Tooltip title="Добавить задачу">
                 <Popover content={fakeFastTaskAddContent} title="Добавить задачу" trigger="click">
