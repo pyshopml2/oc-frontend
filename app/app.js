@@ -40,6 +40,7 @@ import './global-styles';
 const initialState = {};
 const history = createHistory();
 const store = configureStore(initialState, history);
+console.log('store', store, 'persistor', persistor);
 const MOUNT_NODE = document.getElementById('app');
 
 const render = messages => {

@@ -13,7 +13,8 @@ import { Switch, Route } from 'react-router-dom';
 import LoginForm from 'containers/LoginForm/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
 import EmployeesPage from 'containers/EmployeesPage/Loadable';
-import ProfilePage from 'containers/ProfilePage/Loadable';
+import OrganisationProfilePage from 'containers/OrganisationProfilePage/Loadable';
+import UserProfilePage from 'containers/UserProfilePage/Loadable';
 import RolesPage from 'containers/RolesPage/Loadable';
 import SettingsPage from 'containers/SettingsPage/Loadable';
 import CatalogPage from 'containers/CatalogPage/Loadable';
@@ -30,9 +31,12 @@ export default function App() {
     <AppWrapper>
       <Switch>
         <Route path="/login" component={LoginForm} />
-        <Route path="/" component={CatalogPage} />
         <Route path="/catalog" component={CatalogPage} />
-        <Route path="/profile" component={ProfilePage} />
+        <Route
+          path="/organisationprofile"
+          component={OrganisationProfilePage}
+        />
+        <Route path="/userprofile" component={UserProfilePage} />
         <Route path="/settings" component={SettingsPage} />
         <Route path="/roles" component={RolesPage} />
         <Route path="/employees" component={EmployeesPage} />

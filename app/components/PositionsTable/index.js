@@ -137,7 +137,7 @@ class PositionsTable extends React.Component {
       {
         title: 'id',
         dataIndex: 'key',
-        width: '4%',
+        width: '6%',
       },
       {
         title: 'Должность',

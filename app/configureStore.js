@@ -7,6 +7,8 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
+import { persistStore, autoRehydrate } from 'redux-persist-immutable';
+import localForage from 'localforage';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -36,6 +38,16 @@ export default function configureStore(initialState = {}, history) {
     createReducer(),
     fromJS(initialState),
     composeEnhancers(...enhancers),
+  );
+
+  window.persistor = persistStore(
+    store,
+    {
+      storage: localForage,
+    },
+    (a, b) => {
+      console.log('Redux-Persist loaded state');
+    },
   );
 
   // Extensions
