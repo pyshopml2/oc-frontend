@@ -14,7 +14,7 @@ const MenuWithRouter = props => {
     >
       <Menu.Item key="/userprofile">
         <Icon type="user" />
-        <span className="nav-text">Мой профиль</span>
+        <span className="nav-text">Личный профиль</span>
         <Link to="/userprofile" />
       </Menu.Item>
       <Menu.Item key="/catalog">
