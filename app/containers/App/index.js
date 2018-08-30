@@ -30,7 +30,7 @@ export default function App() {
     <AppWrapper>
       <Switch>
         <Route path="/login" component={LoginForm} />
-        <Route path="/" component={HomePage} />
+        <Route path="/" component={CatalogPage} />
         <Route path="/catalog" component={CatalogPage} />
         <Route path="/profile" component={ProfilePage} />
         <Route path="/settings" component={SettingsPage} />

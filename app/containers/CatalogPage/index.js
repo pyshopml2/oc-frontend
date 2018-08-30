@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Button, Tabs, Select } from 'antd';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -19,12 +20,74 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import BasicLayout from '../BasicLayout/Loadable';
+import PositionsTable from '../../components/PositionsTable/Loadable';
+import { fetchCatalogTable } from './actions';
+
+const TabPane = Tabs.TabPane;
+const Option = Select.Option;
 
 /* eslint-disable react/prefer-stateless-function */
 export class CatalogPage extends React.Component {
+  state = {
+    tabPosition: 'top',
+  };
+
+  changeTabPosition = tabPosition => {
+    this.setState({ tabPosition });
+  };
+
+  componentDidMount() {
+    this.props.dispatch(fetchCatalogTable());
+  }
+
   render() {
-      return <BasicLayout />;
-    }
+    return (
+      <BasicLayout>
+        <div>
+          <div style={{ marginBottom: 16 }}>
+            Навигация:
+            <Select
+              value={this.state.tabPosition}
+              onChange={this.changeTabPosition}
+              dropdownMatchSelectWidth={false}
+            >
+              <Option value="top">сверху</Option>
+              <Option value="bottom">снизу</Option>
+              <Option value="left">слева</Option>
+              <Option value="right">справа</Option>
+            </Select>
+          </div>
+          <Button onClick={() => this.props.dispatch(fetchCatalogTable())}>
+            reload
+          </Button>
+          <Tabs tabPosition={this.state.tabPosition}>
+            {console.log(this.props)}
+            <TabPane tab="Должности" key="1">
+              <PositionsTable
+                data={this.props.catalogpage.data}
+                loading={this.props.catalogpage.loading}
+              />
+            </TabPane>
+            <TabPane tab="Роды деятельности" key="2">
+              Роды деятельности
+            </TabPane>
+            <TabPane tab="Типы событий" key="3">
+              Типы событий
+            </TabPane>
+            <TabPane tab="Откуда клиент" key="4">
+              Откуда клиент
+            </TabPane>
+            <TabPane tab="Месторасположения" key="5">
+              Месторасположения
+            </TabPane>
+            <TabPane tab="Товары" key="6">
+              Товары
+            </TabPane>
+          </Tabs>
+        </div>
+      </BasicLayout>
+    );
+  }
 }
 
 CatalogPage.propTypes = {

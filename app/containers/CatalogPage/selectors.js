@@ -16,7 +16,7 @@ const selectCatalogPageDomain = state => state.get('catalogPage', initialState);
  */
 
 const makeSelectCatalogPage = () =>
-  createSelector(selectCatalogPageDomain, substate => substate.toJS());
+  createSelector(selectCatalogPageDomain, substate => substate);
 
 export default makeSelectCatalogPage;
 export { selectCatalogPageDomain };
