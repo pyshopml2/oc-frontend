@@ -8,7 +8,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import LoginForm from 'containers/LoginForm/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
@@ -40,6 +40,7 @@ export default function App() {
         <Route path="/settings" component={SettingsPage} />
         <Route path="/roles" component={RolesPage} />
         <Route path="/employees" component={EmployeesPage} />
+        <Redirect to="/roles" />
       </Switch>
     </AppWrapper>
   );
