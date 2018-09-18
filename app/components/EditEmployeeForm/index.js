@@ -40,6 +40,8 @@ export default class EditEmployeeForm extends React.Component {
       <Option key={position.id}>{position.name}</Option>
     ));
     // this.props.form.setFieldsValue(dataSource);
+    console.log(dataSource);
+
     return (
       <Modal
         title="Редактирование данных сотрудника"
@@ -67,6 +69,7 @@ export default class EditEmployeeForm extends React.Component {
                         message: 'Укажите E-mail',
                       },
                     ],
+                    initialValue: dataSource.email,
                   })(
                     <Input
                       style={{ width: 200 }}

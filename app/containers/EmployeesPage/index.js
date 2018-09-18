@@ -129,15 +129,17 @@ export class EmployeesPage extends React.Component {
           />
         </div>
         <div>
-          <MyEditEmployeeForm
-            modalVisible={this.state.modalEditVisible}
-            confirmLoading={this.state.confirmLoading}
-            dataSource={dataSource.filter(
-              item => item.key === this.state.rowId,
-            )}
-            handleOk={this.handleOk}
-            handleCancel={this.handleCancel}
-          />
+          {this.state.modalEditVisible ? (
+            <MyEditEmployeeForm
+              modalVisible={this.state.modalEditVisible}
+              confirmLoading={this.state.confirmLoading}
+              dataSource={dataSource.find(
+                item => item.key === this.state.rowId,
+              )}
+              handleOk={this.handleOk}
+              handleCancel={this.handleCancel}
+            />
+          ) : null}
         </div>
         <div>
           <MyNewEmployeeForm
