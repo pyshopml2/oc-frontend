@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Modal, Input, Form, Row, Col, Select } from 'antd';
 
 const FormItem = Form.Item;
@@ -23,6 +24,13 @@ const positionData = [
 
 /* eslint-disable react/prefer-stateless-function */
 export default class EditEmployeeForm extends React.Component {
+  componentDidMount() {
+    this.props.form.setFieldsValue({
+      email: this.props.dataSource.email,
+      lastName: this.props.dataSource.name.lastName,
+    });
+  }
+
   render() {
     // console.log(this.props);
     const { props } = this;
@@ -39,8 +47,6 @@ export default class EditEmployeeForm extends React.Component {
     const options = positionData.map(position => (
       <Option key={position.id}>{position.name}</Option>
     ));
-    // this.props.form.setFieldsValue(dataSource);
-    console.log(dataSource);
 
     return (
       <Modal
@@ -69,7 +75,6 @@ export default class EditEmployeeForm extends React.Component {
                         message: 'Укажите E-mail',
                       },
                     ],
-                    initialValue: dataSource.email,
                   })(
                     <Input
                       style={{ width: 200 }}
@@ -153,4 +158,7 @@ export default class EditEmployeeForm extends React.Component {
   }
 }
 
-EditEmployeeForm.propTypes = {};
+EditEmployeeForm.propTypes = {
+  form: PropTypes.object.isRequired,
+  dataSource: PropTypes.object.isRequired,
+};
