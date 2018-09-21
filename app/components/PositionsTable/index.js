@@ -5,6 +5,10 @@
  */
 
 import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+
+
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -13,6 +17,7 @@ import messages from './messages';
 import './index.css';
 
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
+import { fetchCatalogTable } from '../../containers/CatalogPage/actions';
 
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
@@ -137,7 +142,7 @@ class PositionsTable extends React.Component {
       {
         title: 'id',
         dataIndex: 'key',
-        width: '4%',
+        width: '6%',
       },
       {
         title: 'Должность',
@@ -238,6 +243,9 @@ class PositionsTable extends React.Component {
         >
           Добавить запись
         </Button>
+        <Button style={{margin: '10px'}} onClick={() => this.props.dispatch(fetchCatalogTable())}>
+            Обновить
+          </Button>
         <Table
           {...config}
           components={components}
@@ -252,6 +260,14 @@ class PositionsTable extends React.Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(mapDispatchToProps);
+
 PositionsTable.propTypes = {};
 
-export default PositionsTable;
+export default compose(withConnect)(PositionsTable);

@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Button, Tabs, Select } from 'antd';
+import { notification, Button, Tabs, Select } from 'antd';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -37,31 +37,16 @@ export class CatalogPage extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(fetchCatalogTable());
+    if (!this.props.catalogpage.data) {
+      this.props.dispatch(fetchCatalogTable());
+    }
   }
 
   render() {
     return (
       <BasicLayout>
         <div>
-          <div style={{ marginBottom: 16 }}>
-            Навигация:
-            <Select
-              value={this.state.tabPosition}
-              onChange={this.changeTabPosition}
-              dropdownMatchSelectWidth={false}
-            >
-              <Option value="top">сверху</Option>
-              <Option value="bottom">снизу</Option>
-              <Option value="left">слева</Option>
-              <Option value="right">справа</Option>
-            </Select>
-          </div>
-          <Button onClick={() => this.props.dispatch(fetchCatalogTable())}>
-            reload
-          </Button>
           <Tabs tabPosition={this.state.tabPosition}>
-            {console.log(this.props)}
             <TabPane tab="Должности" key="1">
               <PositionsTable
                 data={this.props.catalogpage.data}
