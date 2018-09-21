@@ -37,31 +37,16 @@ export class CatalogPage extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(fetchCatalogTable());
+    if (!this.props.catalogpage.data) {
+      this.props.dispatch(fetchCatalogTable());
+    }
   }
 
   render() {
     return (
       <BasicLayout>
         <div>
-          <div style={{ marginBottom: 16 }}>
-            Навигация:
-            <Select
-              value={this.state.tabPosition}
-              onChange={this.changeTabPosition}
-              dropdownMatchSelectWidth={false}
-            >
-              <Option value="top">сверху</Option>
-              <Option value="bottom">снизу</Option>
-              <Option value="left">слева</Option>
-              <Option value="right">справа</Option>
-            </Select>
-          </div>
-          <Button onClick={() => this.props.dispatch(fetchCatalogTable())}>
-            reload
-          </Button>
           <Tabs tabPosition={this.state.tabPosition}>
-            {console.log(this.props)}
             <TabPane tab="Должности" key="1">
               <PositionsTable
                 data={this.props.catalogpage.data}
