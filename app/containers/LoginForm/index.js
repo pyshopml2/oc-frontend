@@ -12,6 +12,11 @@ const error = () => {
 };
 
 class Login extends React.Component {
+
+  componentDidMount() {
+    this.shouldNavigateAway();
+  }
+
   componentWillMount() {
     // const { receiveData } = this.props;
     // receiveData(null, 'auth');
@@ -25,6 +30,7 @@ class Login extends React.Component {
     }
   }
   componentDidUpdate(prevProps) {
+    this.shouldNavigateAway();
     const { auth: nextAuth = {}, history } = this.props;
     // const { history } = this.props;
     if (nextAuth.data && nextAuth.data.uid) {
@@ -32,6 +38,13 @@ class Login extends React.Component {
       history.push('/');
     }
   }
+
+  shouldNavigateAway() {
+    if (this.props.auth) {
+      this.props.history.push('/');
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -102,10 +115,9 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToPorps = state => {
+const mapStateToPorps = state => ({ auth: state.get('auth').authenticated });
   // const { auth } = state.httpData;
   // return { auth };
-};
 const mapDispatchToProps = dispatch => ({
   // fetchData: bindActionCreators(fetchData, dispatch),
   // receiveData: bindActionCreators(receiveData, dispatch),

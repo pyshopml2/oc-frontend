@@ -9,7 +9,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import LoginForm from 'containers/LoginForm/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
 import EmployeesPage from 'containers/EmployeesPage/Loadable';
@@ -19,7 +19,7 @@ import RolesPage from 'containers/RolesPage/Loadable';
 import SettingsPage from 'containers/SettingsPage/Loadable';
 import CatalogPage from 'containers/CatalogPage/Loadable';
 // import BasicLayout from 'containers/BasicLayout/Loadable'
-
+import requireAuth from '../../auth/requireAuth';
 const AppWrapper = styled.div`
   display: flex;
   min-height: 100vh;
@@ -31,15 +31,15 @@ export default function App() {
     <AppWrapper>
       <Switch>
         <Route path="/login" component={LoginForm} />
-        <Route path="/catalog" component={CatalogPage} />
+        <Route path="/catalog" component={requireAuth(CatalogPage)} />
         <Route
           path="/organisationprofile"
-          component={OrganisationProfilePage}
+          component={requireAuth(OrganisationProfilePage)}
         />
-        <Route path="/userprofile" component={UserProfilePage} />
-        <Route path="/settings" component={SettingsPage} />
-        <Route path="/roles" component={RolesPage} />
-        <Route path="/employees" component={EmployeesPage} />
+        <Route path="/userprofile" component={requireAuth(UserProfilePage)} />
+        <Route path="/settings" component={requireAuth(SettingsPage)} />
+        <Route path="/roles" component={requireAuth(RolesPage)} />
+        <Route path="/employees" component={requireAuth(EmployeesPage)} />
         <Redirect to="/roles" />
       </Switch>
     </AppWrapper>
