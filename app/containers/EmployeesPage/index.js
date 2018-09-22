@@ -36,7 +36,7 @@ const dataSource = [
     email: 'ya@ya.ru',
     mobile: '8 (911) 1234567',
     position: 'Director',
-    status: 'Confirmed',
+    status: 'Активный',
     isEmailConfirmed: true,
     isBlocked: true,
   },
@@ -129,30 +129,33 @@ export class EmployeesPage extends React.Component {
           />
         </div>
         <div>
-          <MyEditEmployeeForm
-            modalVisible={this.state.modalEditVisible}
-            confirmLoading={this.state.confirmLoading}
-            dataSource={dataSource.filter(
-              item => item.key === this.state.rowId,
-            )}
-            handleOk={this.handleOk}
-            handleCancel={this.handleCancel}
-          />
+          {this.state.modalEditVisible ? (
+            <MyEditEmployeeForm
+              modalVisible={this.state.modalEditVisible}
+              confirmLoading={this.state.confirmLoading}
+              dataSource={dataSource.find(
+                item => item.key === this.state.rowId,
+              )}
+              handleOk={this.handleOk}
+              handleCancel={this.handleCancel}
+            />
+          ) : null}
         </div>
         <div>
-          <MyNewEmployeeForm
-            modalVisible={this.state.modalNewVisible}
-            confirmLoading={this.state.confirmLoading}
-            handleOk={this.handleOk}
-            handleCancel={this.handleCancel}
-          />
+          {this.state.modalNewVisible ? (
+            <MyNewEmployeeForm
+              modalVisible={this.state.modalNewVisible}
+              confirmLoading={this.state.confirmLoading}
+              handleOk={this.handleOk}
+              handleCancel={this.handleCancel}
+            />
+          ) : null}
         </div>
       </BasicLayout>
     );
   }
 
   handleOk = (form, editableData) => {
-    // console.log(form.getFieldsError());
     if (form.isFieldsTouched() && form) {
       if (this.state.rowId === null) {
         dataSource.push({
@@ -165,7 +168,7 @@ export class EmployeesPage extends React.Component {
           email: form.getFieldValue('email'),
           mobile: form.getFieldValue('mobile'),
           position: form.getFieldValue('position'),
-          status: 'New',
+          status: 'Активный',
           isEmailConfirmed: false,
           isBlocked: false,
         });

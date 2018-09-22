@@ -124,9 +124,6 @@ export default class NewEmployeeForm extends React.Component {
                       style={{ width: 200 }}
                       placeholder="Укажите должность"
                       optionFilterProp="children"
-                      // onChange={handleChange}
-                      // onFocus={handleFocus}
-                      // onBlur={handleBlur}
                       filterOption={(input, option) =>
                         option.props.children
                           .toLowerCase()
