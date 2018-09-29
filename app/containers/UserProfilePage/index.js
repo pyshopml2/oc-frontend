@@ -60,7 +60,7 @@ export class UserProfilePage extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{ margin: '15px' }}>
+        <div style={{}}>
           <Card title="Профиль пользователя" extra = {
             <Tooltip title="Изменить пароль">
               <Button icon="dashboard" style={{ margin: '0 20px' }} onClick={showModal} />

@@ -80,7 +80,7 @@ export class OrganisationProfilePage extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{ margin: '15px' }}>
+        <div style={{}}>
           <Card title="Профиль организации" loading={false}>
             <List
               dataSource={data}

@@ -95,7 +95,7 @@ export class RolesPage extends React.Component {
         <Table
           dataSource={dataSourse}
           columns={columns}
-          style={{ margin: '30px' }}
+          style={{}}
           pagination={false}
         />
       </React.Fragment>
