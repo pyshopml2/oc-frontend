@@ -21,6 +21,7 @@ import {
   Icon,
   Avatar,
   Input,
+  Switch,
 } from 'antd';
 
 import injectSaga from 'utils/injectSaga';
@@ -66,11 +67,18 @@ export class BasicLayout extends Component {
       notifications: true,
       profile: true,
     },
+    isAdmin: true,
   };
 
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
+    });
+  };
+
+  handleUserAdminSwitch = () => {
+    this.setState({
+      isAdmin: !this.state.isAdmin,
     });
   };
 
@@ -112,6 +120,7 @@ export class BasicLayout extends Component {
             </div>
           )}
           <MenuWithRouter
+            isAdmin={this.state.isAdmin}
             currentLocation={this.props.location.location.pathname}
           />
         </Sider>
@@ -124,6 +133,13 @@ export class BasicLayout extends Component {
             />
 
             <div className="Right">
+              <Switch
+                checkedChildren="Админ"
+                unCheckedChildren="Сотрудник"
+                defaultChecked
+                style={{ margin: '0 20px', alignSelf: 'center' }}
+                onChange={this.handleUserAdminSwitch}
+              />
               <Search
                 placeholder="Поиск"
                 onSearch={value => console.log(value)}
@@ -165,12 +181,12 @@ export class BasicLayout extends Component {
           <Content
             style={{
               margin: '24px 16px',
-              padding: 24,
+              padding: '24px',
               background: '#fff',
               minHeight: 280,
             }}
           >
-            <Breadcrumb>
+            {/* <Breadcrumb>
               <Breadcrumb.Item href="/catalog">
                 <Icon type="home" />
               </Breadcrumb.Item>
@@ -179,7 +195,7 @@ export class BasicLayout extends Component {
                 <span>Application List</span>
               </Breadcrumb.Item>
               <Breadcrumb.Item>Application</Breadcrumb.Item>
-            </Breadcrumb>
+            </Breadcrumb> */}
             {this.props.children}
           </Content>
           <Footer style={{ textAlign: 'center' }}>OwnCRM, 2018</Footer>
