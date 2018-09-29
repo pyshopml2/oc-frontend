@@ -10,7 +10,18 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Badge, Tooltip, Button, Popover, Breadcrumb, Layout, Menu, Icon, Avatar, Input } from 'antd';
+import {
+  Badge,
+  Tooltip,
+  Button,
+  Popover,
+  Breadcrumb,
+  Layout,
+  Menu,
+  Icon,
+  Avatar,
+  Input,
+} from 'antd';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -21,7 +32,7 @@ import saga from './saga';
 import messages from './messages';
 import './index.css';
 import 'antd/dist/antd.css';
-import MenuWithRouter from '../../components/MenuWithRouter/Loadable'
+import MenuWithRouter from '../../components/MenuWithRouter/Loadable';
 
 const { Header, Content, Sider, Footer } = Layout;
 const Search = Input.Search;
@@ -50,12 +61,28 @@ const fakeFastTaskAddContent = (
 export class BasicLayout extends Component {
   state = {
     collapsed: false,
+    isPopoverVisible: {
+      addTask: true,
+      notifications: true,
+      profile: true,
+    },
   };
 
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
     });
+  };
+
+  handleVisibleChange = (event) => {
+    console.log(event.type)
+    if (event.type == 'mouseover') {
+      this.setState({
+        isPopoverVisible: {
+          notifications: !this.state.isPopoverVisible.notifications,
+        },
+      });
+    }
   };
 
   render() {
@@ -68,13 +95,26 @@ export class BasicLayout extends Component {
           collapsed={this.state.collapsed}
           width="210"
         >
-          {
-            this.state.collapsed ?
-              <div className="logo" style={{ color: '#001529', fontSize: 20, textAlign: 'center' }}> O </div>
-              :
-              <div className="logo" style={{ color: '#001529', fontSize: 20, textAlign: 'center' }}> OwnCRM </div>
-          }
-          <MenuWithRouter currentLocation={this.props.location.location.pathname} />
+          {this.state.collapsed ? (
+            <div
+              className="logo"
+              style={{ color: '#001529', fontSize: 20, textAlign: 'center' }}
+            >
+              {' '}
+              O{' '}
+            </div>
+          ) : (
+            <div
+              className="logo"
+              style={{ color: '#001529', fontSize: 20, textAlign: 'center' }}
+            >
+              {' '}
+              OwnCRM{' '}
+            </div>
+          )}
+          <MenuWithRouter
+            currentLocation={this.props.location.location.pathname}
+          />
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }} className="Header">
@@ -91,23 +131,35 @@ export class BasicLayout extends Component {
                 style={{ width: 200 }}
               />
               <Tooltip title="Добавить задачу">
-                <Popover content={fakeFastTaskAddContent} title="Добавить задачу" trigger="click">
+                <Popover
+                  content={fakeFastTaskAddContent}
+                  title="Добавить задачу"
+                  trigger="click"
+                >
                   <Button icon="plus" style={{ margin: '0 20px' }} />
                 </Popover>
               </Tooltip>
-              <Tooltip title="Уведомления">
-                <Popover content={fakeNotificationContent} title="Уведомления" trigger="click">
+              <Tooltip
+                title="Уведомления"
+              >
+                <Popover
+                  onVisibleChange={event => this.handleVisibleChange(event)}
+                  content={fakeNotificationContent}
+                  title="Уведомления"
+                  trigger="click"
+                >
                   <Badge count={2}>
-                    <Button
-                      className="Bell"
-                      icon="bell"
-                      style={{}}
-                    />
+                    <Button className="Bell" icon="bell" style={{}} />
                   </Badge>
                 </Popover>
               </Tooltip>
               <Tooltip title="Профиль">
-                <Popover content={fakeProfileContent} title="Профиль" trigger="click">
+                <Popover
+                  placement="bottomRight"
+                  content={fakeProfileContent}
+                  title="Профиль"
+                  trigger="click"
+                >
                   <Button icon="user" style={{ margin: '0 20px' }} />
                 </Popover>
               </Tooltip>
@@ -122,10 +174,10 @@ export class BasicLayout extends Component {
             }}
           >
             <Breadcrumb>
-              <Breadcrumb.Item href="">
+              <Breadcrumb.Item href="/catalog">
                 <Icon type="home" />
               </Breadcrumb.Item>
-              <Breadcrumb.Item href="">
+              <Breadcrumb.Item href="/roles">
                 <Icon type="user" />
                 <span>Application List</span>
               </Breadcrumb.Item>

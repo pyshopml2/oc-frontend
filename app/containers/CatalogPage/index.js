@@ -21,7 +21,6 @@ import saga from './saga';
 import messages from './messages';
 import BasicLayout from '../BasicLayout/Loadable';
 import PositionsTable from '../../components/PositionsTable/Loadable';
-import { fetchCatalogTable } from './actions';
 
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
@@ -36,22 +35,13 @@ export class CatalogPage extends React.Component {
     this.setState({ tabPosition });
   };
 
-  componentDidMount() {
-    if (!this.props.catalogpage.data) {
-      this.props.dispatch(fetchCatalogTable());
-    }
-  }
-
   render() {
     return (
       <BasicLayout>
         <div>
           <Tabs tabPosition={this.state.tabPosition}>
             <TabPane tab="Должности" key="1">
-              <PositionsTable
-                data={this.props.catalogpage.data}
-                loading={this.props.catalogpage.loading}
-              />
+              <PositionsTable />
             </TabPane>
             <TabPane tab="Роды деятельности" key="2">
               Роды деятельности
@@ -77,6 +67,7 @@ export class CatalogPage extends React.Component {
 
 CatalogPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -94,11 +85,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'catalogPage', reducer });
-const withSaga = injectSaga({ key: 'catalogPage', saga });
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(CatalogPage);
+export default compose(withConnect)(CatalogPage);

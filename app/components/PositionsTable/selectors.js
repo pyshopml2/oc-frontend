@@ -2,21 +2,21 @@ import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
 /**
- * Direct selector to the positions state domain
+ * Direct selector to the catalogPage state domain
  */
 
-const selectPositionsDomain = state => state.get('positions', initialState);
+const selectPositionsTableDomain = state => state.get('positionsTable', initialState);
 
 /**
  * Other specific selectors
  */
 
 /**
- * Default selector used by Positions
+ * Default selector used by CatalogPage
  */
 
-const makeSelectPositions = () =>
-  createSelector(selectPositionsDomain, substate => substate.toJS());
+const makeSelectPositionsTable = () =>
+  createSelector(selectPositionsTableDomain, substate => substate);
 
-export default makeSelectPositions;
-export { selectPositionsDomain };
+export default makeSelectPositionsTable;
+export { selectPositionsTableDomain };

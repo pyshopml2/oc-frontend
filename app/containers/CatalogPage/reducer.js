@@ -1,42 +1,18 @@
 /*
  *
- * CatalogPage reducer
+ * RolesPage reducer
  *
  */
 
 import { fromJS } from 'immutable';
-import {
-  REQUESTED_CATALOGTABLE,
-  REQUESTED_CATALOGTABLE_FAILED,
-  REQUESTED_CATALOGTABLE_SUCCEEDED,
-} from './constants';
+import { DEFAULT_ACTION } from './constants';
 
-export const initialState = fromJS({
-  data: '',
-  loading: false,
-  error: false,
-});
+export const initialState = fromJS({});
 
 function catalogPageReducer(state = initialState, action) {
   switch (action.type) {
-    case REQUESTED_CATALOGTABLE:
-      return {
-        data: '',
-        loading: true,
-        error: false,
-      };
-    case REQUESTED_CATALOGTABLE_SUCCEEDED:
-      return {
-        data: action.data,
-        loading: false,
-        error: false,
-      };
-    case REQUESTED_CATALOGTABLE_FAILED:
-      return {
-        data: '',
-        loading: false,
-        error: true,
-      };
+    case DEFAULT_ACTION:
+      return state;
     default:
       return state;
   }

@@ -17,7 +17,13 @@ import messages from './messages';
 import './index.css';
 
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
-import { fetchCatalogTable } from '../../containers/CatalogPage/actions';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import { createStructuredSelector } from 'reselect';
+import makeSelectPositionsTable from './selectors';
+import reducer from './reducer';
+import saga from './saga';
+import { fetchPositionsTable } from './actions';
 
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
@@ -172,8 +178,28 @@ class PositionsTable extends React.Component {
       },
     ];
     this.state = {
-      dataSource: this.props.data,
+      dataSource: [],
     };
+  }
+
+  componentWillReceiveProps(props) {
+    console.log('props', props)
+    if(props.positionsTable.data) {
+      this.setState({
+        dataSource: props.positionsTable.data
+      })
+    }
+  }
+
+  componentDidMount() {
+    if(!this.props.positionsTable.data) {
+      this.props.dispatch(fetchPositionsTable());
+    }
+    else {
+      this.setState({
+        dataSource: this.props.positionsTable.data
+      })
+    }
   }
 
   handleDelete = key => {
@@ -234,6 +260,7 @@ class PositionsTable extends React.Component {
         }),
       };
     });
+    console.log("dataSource", dataSource)
     return (
       <div>
         <Button
@@ -243,7 +270,7 @@ class PositionsTable extends React.Component {
         >
           Добавить запись
         </Button>
-        <Button style={{margin: '10px'}} onClick={() => this.props.dispatch(fetchCatalogTable())}>
+        <Button style={{margin: '10px'}} onClick={() => this.props.dispatch(fetchPositionsTable())}>
             Обновить
           </Button>
         <Table
@@ -253,12 +280,16 @@ class PositionsTable extends React.Component {
           bordered
           dataSource={dataSource}
           columns={columns}
-          loading={this.props.loading}
+          loading={this.props.positionsTable.loading}
         />
       </div>
     );
   }
 }
+
+const mapStateToProps = createStructuredSelector({
+  positionsTable: makeSelectPositionsTable(),
+});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -266,8 +297,15 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(mapDispatchToProps);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+const withReducer = injectReducer({ key: 'positionsTable', reducer });
+const withSaga = injectSaga({ key: 'positionsTable', saga });
 
 PositionsTable.propTypes = {};
 
-export default compose(withConnect)(PositionsTable);
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(PositionsTable);
