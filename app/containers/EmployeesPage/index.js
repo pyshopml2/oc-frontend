@@ -152,7 +152,6 @@ export class EmployeesPage extends React.Component {
   }
 
   handleOk = (form, editableData) => {
-    // console.log(form.getFieldsError());
     if (form.isFieldsTouched() && form) {
       if (this.state.rowId === null) {
         dataSource.push({
@@ -170,7 +169,6 @@ export class EmployeesPage extends React.Component {
           isBlocked: false,
         });
       } else {
-        console.log(editableData);
       }
     }
     this.setState({
@@ -223,9 +221,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
+const withReducer = injectReducer({ key: 'employeesPage', reducer });
 const withSaga = injectSaga({ key: 'employeesPage', saga });
 
 export default compose(
+  withReducer,
   withSaga,
   withConnect,
 )(EmployeesPage);

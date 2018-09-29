@@ -103,9 +103,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
+const withReducer = injectReducer({ key: 'userProfilePage', reducer });
 const withSaga = injectSaga({ key: 'userProfilePage', saga });
 
 export default compose(
+  withReducer,
   withSaga,
   withConnect,
 )(UserProfilePage);

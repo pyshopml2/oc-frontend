@@ -181,7 +181,6 @@ class PositionsTable extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log('props', props);
     if (props.positionsTable.data) {
       this.setState({
         dataSource: props.positionsTable.data,
@@ -202,7 +201,6 @@ class PositionsTable extends React.Component {
   handleDelete = key => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
-    console.log('after delete', this.state.dataSource);
   };
 
   handleAdd = () => {
@@ -230,10 +228,6 @@ class PositionsTable extends React.Component {
     this.setState({ dataSource: newData });
   };
 
-  componentWillUnmount() {
-    console.log('table unmounted');
-  }
-
   render() {
     const { dataSource } = this.state;
     const components = {
@@ -257,7 +251,6 @@ class PositionsTable extends React.Component {
         }),
       };
     });
-    console.log('dataSource', dataSource);
     return (
       <div>
         <Button

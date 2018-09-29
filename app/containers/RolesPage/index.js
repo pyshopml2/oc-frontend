@@ -87,8 +87,6 @@ roles.forEach(role => {
   dataSourse.push({ name: role, ...row });
 });
 
-console.log(dataSourse);
-
 /* eslint-disable react/prefer-stateless-function */
 export class RolesPage extends React.Component {
   render() {
@@ -123,10 +121,11 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-
+const withReducer = injectReducer({ key: 'rolesPage', reducer });
 const withSaga = injectSaga({ key: 'rolesPage', saga });
 
 export default compose(
+  withReducer,
   withSaga,
   withConnect,
 )(RolesPage);

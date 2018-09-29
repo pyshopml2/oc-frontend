@@ -75,7 +75,6 @@ export class BasicLayout extends Component {
   };
 
   handleVisibleChange = event => {
-    console.log(event.type);
     if (event.type == 'mouseover') {
       this.setState({
         isPopoverVisible: {
@@ -210,9 +209,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
+const withReducer = injectReducer({ key: 'basicLayout', reducer });
 const withSaga = injectSaga({ key: 'basicLayout', saga });
 
 export default compose(
+  withReducer,
   withSaga,
   withConnect,
 )(BasicLayout);

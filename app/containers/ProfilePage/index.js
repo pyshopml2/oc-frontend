@@ -44,10 +44,11 @@ const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
 );
-
+const withReducer = injectReducer({ key: 'profilePage', reducer });
 const withSaga = injectSaga({ key: 'profilePage', saga });
 
 export default compose(
+  withReducer,
   withSaga,
   withConnect,
 )(ProfilePage);

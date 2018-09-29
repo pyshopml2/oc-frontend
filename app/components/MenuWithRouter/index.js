@@ -3,7 +3,6 @@ import { Link, NavLink, withRouter } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 
 const MenuWithRouter = props => {
-  console.log(props);
   return (
     <Menu
       selectedKeys={[props.currentLocation]}

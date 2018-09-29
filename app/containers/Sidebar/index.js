@@ -107,9 +107,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
+const withReducer = injectReducer({ key: 'sidebar', reducer });
 const withSaga = injectSaga({ key: 'sidebar', saga });
 
 export default compose(
+  withReducer,
   withSaga,
   withConnect,
 )(Sidebar);

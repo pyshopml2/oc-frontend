@@ -24,7 +24,6 @@ const positionData = [
 /* eslint-disable react/prefer-stateless-function */
 export default class EditEmployeeForm extends React.Component {
   render() {
-    // console.log(this.props);
     const { props } = this;
     const {
       modalVisible,
@@ -34,12 +33,10 @@ export default class EditEmployeeForm extends React.Component {
       dataSource,
       form,
     } = props;
-    // console.log(dataSource);
     const { getFieldDecorator } = form;
     const options = positionData.map(position => (
       <Option key={position.id}>{position.name}</Option>
     ));
-    // this.props.form.setFieldsValue(dataSource);
     return (
       <Modal
         title="Редактирование данных сотрудника"
