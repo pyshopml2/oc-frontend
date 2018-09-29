@@ -8,7 +8,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
@@ -165,16 +164,15 @@ class PositionsTable extends React.Component {
       {
         title: 'Действие',
         dataIndex: 'operation',
-        render: (text, record) => {
-          return this.state.dataSource.length > 1 ? (
+        render: (text, record) =>
+          this.state.dataSource.length > 1 ? (
             <Popconfirm
               title="Уверены?"
               onConfirm={() => this.handleDelete(record.key)}
             >
               <a href="javascript:;">Удалить</a>
             </Popconfirm>
-          ) : null;
-        },
+          ) : null,
       },
     ];
     this.state = {
@@ -183,22 +181,21 @@ class PositionsTable extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log('props', props)
-    if(props.positionsTable.data) {
+    console.log('props', props);
+    if (props.positionsTable.data) {
       this.setState({
-        dataSource: props.positionsTable.data
-      })
+        dataSource: props.positionsTable.data,
+      });
     }
   }
 
   componentDidMount() {
-    if(!this.props.positionsTable.data) {
+    if (!this.props.positionsTable.data) {
       this.props.dispatch(fetchPositionsTable());
-    }
-    else {
+    } else {
       this.setState({
-        dataSource: this.props.positionsTable.data
-      })
+        dataSource: this.props.positionsTable.data,
+      });
     }
   }
 
@@ -260,7 +257,7 @@ class PositionsTable extends React.Component {
         }),
       };
     });
-    console.log("dataSource", dataSource)
+    console.log('dataSource', dataSource);
     return (
       <div>
         <Button
@@ -270,9 +267,12 @@ class PositionsTable extends React.Component {
         >
           Добавить запись
         </Button>
-        <Button style={{margin: '10px'}} onClick={() => this.props.dispatch(fetchPositionsTable())}>
-            Обновить
-          </Button>
+        <Button
+          style={{ margin: '10px' }}
+          onClick={() => this.props.dispatch(fetchPositionsTable())}
+        >
+          Обновить
+        </Button>
         <Table
           {...config}
           components={components}
@@ -297,7 +297,10 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
 
 const withReducer = injectReducer({ key: 'positionsTable', reducer });
 const withSaga = injectSaga({ key: 'positionsTable', saga });
