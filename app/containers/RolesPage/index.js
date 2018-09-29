@@ -93,14 +93,14 @@ console.log(dataSourse);
 export class RolesPage extends React.Component {
   render() {
     return (
-      <BasicLayout>
+      <React.Fragment>
         <Table
           dataSource={dataSourse}
           columns={columns}
           style={{ margin: '30px' }}
           pagination={false}
         />
-      </BasicLayout>
+      </React.Fragment>
     );
   }
 }
@@ -124,11 +124,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'rolesPage', reducer });
 const withSaga = injectSaga({ key: 'rolesPage', saga });
 
 export default compose(
-  withReducer,
   withSaga,
   withConnect,
 )(RolesPage);

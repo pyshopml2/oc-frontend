@@ -22,7 +22,7 @@ import BasicLayout from '../BasicLayout/Loadable';
 /* eslint-disable react/prefer-stateless-function */
 export class ProfilePage extends React.Component {
   render() {
-    return <BasicLayout />;
+    return <React.Fragment />;
   }
 }
 
@@ -45,11 +45,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'profilePage', reducer });
 const withSaga = injectSaga({ key: 'profilePage', saga });
 
 export default compose(
-  withReducer,
   withSaga,
   withConnect,
 )(ProfilePage);

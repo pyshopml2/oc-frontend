@@ -59,7 +59,7 @@ function showModal() {
 export class UserProfilePage extends React.Component {
   render() {
     return (
-      <BasicLayout>
+      <React.Fragment>
         <div style={{ margin: '15px' }}>
           <Card title="Профиль пользователя" extra = {
             <Tooltip title="Изменить пароль">
@@ -79,7 +79,7 @@ export class UserProfilePage extends React.Component {
             />
           </Card>
         </div>
-      </BasicLayout>
+      </React.Fragment>
     );
   }
 }
@@ -103,11 +103,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'userProfilePage', reducer });
 const withSaga = injectSaga({ key: 'userProfilePage', saga });
 
 export default compose(
-  withReducer,
   withSaga,
   withConnect,
 )(UserProfilePage);

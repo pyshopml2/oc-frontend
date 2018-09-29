@@ -37,8 +37,7 @@ export class CatalogPage extends React.Component {
 
   render() {
     return (
-      <BasicLayout>
-        <div>
+        <React.Fragment>
           <Tabs tabPosition={this.state.tabPosition}>
             <TabPane tab="Должности" key="1">
               <PositionsTable />
@@ -59,8 +58,7 @@ export class CatalogPage extends React.Component {
               Товары
             </TabPane>
           </Tabs>
-        </div>
-      </BasicLayout>
+        </React.Fragment>
     );
   }
 }

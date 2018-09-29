@@ -108,7 +108,7 @@ export class EmployeesPage extends React.Component {
 
   render() {
     return (
-      <BasicLayout>
+      <React.Fragment>
         <div>
           <Button
             onClick={this.showModal}
@@ -147,7 +147,7 @@ export class EmployeesPage extends React.Component {
             handleCancel={this.handleCancel}
           />
         </div>
-      </BasicLayout>
+      </React.Fragment>
     );
   }
 
@@ -223,11 +223,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'employeesPage', reducer });
 const withSaga = injectSaga({ key: 'employeesPage', saga });
 
 export default compose(
-  withReducer,
   withSaga,
   withConnect,
 )(EmployeesPage);

@@ -16,11 +16,11 @@ import BasicLayout from '../BasicLayout/Loadable';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
-  
+
   render() {
-    return <BasicLayout>{
+    return <React.Fragment>{
     }
       <div>Здесь div</div>
-    </BasicLayout>;
+    </React.Fragment>;
   }
 }

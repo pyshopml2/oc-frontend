@@ -23,9 +23,9 @@ import BasicLayout from '../BasicLayout/Loadable';
 export class SettingsPage extends React.Component {
   render() {
     return (
-      <BasicLayout>
+      <React.Fragment>
         <div>settings page</div>
-      </BasicLayout>
+      </React.Fragment>
     );
   }
 }
@@ -49,11 +49,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'settingsPage', reducer });
 const withSaga = injectSaga({ key: 'settingsPage', saga });
 
 export default compose(
-  withReducer,
   withSaga,
   withConnect,
 )(SettingsPage);

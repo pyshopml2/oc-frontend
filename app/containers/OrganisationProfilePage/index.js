@@ -79,7 +79,7 @@ const data = [
 export class OrganisationProfilePage extends React.Component {
   render() {
     return (
-      <BasicLayout>
+      <React.Fragment>
         <div style={{ margin: '15px' }}>
           <Card title="Профиль организации" loading={false}>
             <List
@@ -95,7 +95,7 @@ export class OrganisationProfilePage extends React.Component {
             />
           </Card>
         </div>
-      </BasicLayout>
+      </React.Fragment>
     );
   }
 }
@@ -119,7 +119,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'organisationProfilePage', reducer });
 const withSaga = injectSaga({ key: 'organisationProfilePage', saga });
 
-export default compose(withConnect)(OrganisationProfilePage);
+export default compose(
+  withSaga,
+  withConnect,
+)(OrganisationProfilePage);
